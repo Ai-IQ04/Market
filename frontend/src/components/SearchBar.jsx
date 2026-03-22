@@ -17,10 +17,14 @@ export default function SearchBar({ value, onChange, lang = 'th' }) {
         className="search-input"
         id="search-input"
       />
-      {value && (
-        <button className="search-clear" onClick={() => onChange('')}>
+      {value ? (
+        <button className="search-clear" onClick={() => onChange('')} title="Clear">
           ✕
         </button>
+      ) : (
+        <div className="search-shortcut">
+          <span className="kbd">Ctrl</span> <span className="kbd">K</span>
+        </div>
       )}
     </div>
   );

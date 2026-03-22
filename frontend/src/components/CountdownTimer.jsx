@@ -48,9 +48,27 @@ export default function CountdownTimer({ endTime, lang = 'th' }) {
   }, [endTime, lang]);
 
   return (
-    <div className={`countdown-timer ${isUrgent ? 'urgent' : ''} ${isExpired ? 'expired' : ''}`}>
-      <span className="countdown-icon">⏱</span>
-      <span className="countdown-text">{timeLeft}</span>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+      <div className={`countdown-timer ${isUrgent ? 'urgent' : ''} ${isExpired ? 'expired' : ''}`}>
+        <span className="countdown-icon">⏱</span>
+        <span className="countdown-text">{timeLeft}</span>
+      </div>
+      
+      {/* Progress Bar Line */}
+      <div className="countdown-progress-bg" style={{ 
+        height: '3px', 
+        background: 'rgba(255,255,255,0.1)', 
+        borderRadius: '2px', 
+        overflow: 'hidden' 
+      }}>
+        <div className="countdown-progress-fill" style={{ 
+          height: '100%', 
+          background: isExpired ? 'var(--red)' : isUrgent ? 'var(--orange)' : 'var(--green)', 
+          width: isExpired ? '0%' : isUrgent ? '15%' : '100%',
+          transition: 'all 1s linear',
+          boxShadow: isUrgent ? '0 0 8px var(--orange)' : '0 0 8px var(--green)'
+        }}></div>
+      </div>
     </div>
   );
 }

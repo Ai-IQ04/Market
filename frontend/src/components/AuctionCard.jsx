@@ -36,7 +36,9 @@ export default function AuctionCard({ item, lang = 'th' }) {
         </div>
 
         {/* Name */}
-        <h3 className="card-name" title={item.name}>{item.name}</h3>
+        {item.type !== 'giveaway' && (
+          <h3 className="card-name" title={item.name}>{item.name}</h3>
+        )}
 
         {/* Channel & Ref */}
         <div className="card-meta">
@@ -45,18 +47,34 @@ export default function AuctionCard({ item, lang = 'th' }) {
         </div>
 
         {/* Price Section */}
-        {item.type !== 'giveaway' && (
-          <div className="card-pricing">
-            {item.type === 'auction' && item.currentBid != null ? (
+        <div className="card-pricing">
+          {item.type === 'giveaway' ? (
+            <div className="price-row">
+              <span className="price-label">{t(lang, 'prize')}</span>
+              <span className="price-value highlight" style={{ textAlign: 'right', whiteSpace: 'normal', lineHeight: '1.2' }}>{item.name}</span>
+            </div>
+          ) : item.type === 'auction' ? (
               <>
-                <div className="price-row">
-                  <span className="price-label">{t(lang, 'currentBid')}</span>
-                  <span className="price-value highlight">{formatPrice(item.currentBid)}</span>
-                </div>
-                {item.buyNowPrice && (
+                {(item.currentBid != null || item.startingPrice != null) && (
+                  <div className="price-row">
+                    <span className="price-label">
+                      {item.currentBid != null ? t(lang, 'currentBid') : t(lang, 'startingPrice')}
+                    </span>
+                    <span className="price-value highlight">
+                      {formatPrice(item.currentBid != null ? item.currentBid : item.startingPrice)}
+                    </span>
+                  </div>
+                )}
+                {item.buyNowPrice != null && (
                   <div className="price-row">
                     <span className="price-label">{t(lang, 'buyNow')}</span>
                     <span className="price-value buynow">{formatPrice(item.buyNowPrice)}</span>
+                  </div>
+                )}
+                {item.currentBid == null && item.startingPrice == null && item.buyNowPrice == null && (
+                  <div className="price-row">
+                    <span className="price-label">{t(lang, 'price')}</span>
+                    <span className="price-value highlight">{formatPrice(item.price)}</span>
                   </div>
                 )}
               </>
@@ -66,14 +84,14 @@ export default function AuctionCard({ item, lang = 'th' }) {
                 <span className="price-value highlight">{formatPrice(item.price)}</span>
               </div>
             )}
-            {item.quantity > 1 && (
+            {item.quantity && item.quantity > 1 && (
               <div className="price-row">
                 <span className="price-label">{t(lang, 'quantity')}</span>
                 <span className="price-value">×{item.quantity}</span>
               </div>
             )}
+            
           </div>
-        )}
 
         {/* Countdown */}
         <div className="card-countdown">

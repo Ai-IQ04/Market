@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import CategoryFilter from '@/components/CategoryFilter';
 import SortSelect from '@/components/SortSelect';
@@ -14,6 +14,19 @@ export default function Home() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('all');
   const [sort, setSort] = useState('newest');
+  const [toasts, setToasts] = useState([]); // Added toasts state
+
+  // Use refs for socket updates
+  const auctionsRef = useRef(auctions); // Added auctionsRef
+
+  // Toast adder utility
+  const addToast = (message, title) => {
+    const id = Date.now() + Math.random();
+    setToasts(prev => [...prev, { id, title, message }]);
+    setTimeout(() => {
+      setToasts(prev => prev.filter(t => t.id !== id));
+    }, 5000);
+  };
 
   // Extract unique categories from auctions
   const categories = useMemo(() => {
@@ -22,6 +35,44 @@ export default function Home() {
       if (item.channel) cats.add(item.channel);
     });
     return Array.from(cats).sort();
+  }, [auctions]);
+
+  // Group counts before filtering by category/search
+  const categoryCounts = useMemo(() => {
+    const counts = { all: auctions.filter(a => a.status !== 'CLOSED').length };
+    auctions.filter(a => a.status !== 'CLOSED').forEach(item => {
+      counts[item.channel] = (counts[item.channel] || 0) + 1;
+    });
+    return counts;
+  }, [auctions]);
+
+  const isFirstLoad = useRef(true);
+
+  // Connect state ref to updated auctions and detect changes for toasts
+  useEffect(() => {
+    if (isFirstLoad.current) {
+      if (auctions.length > 0) {
+        isFirstLoad.current = false;
+        auctionsRef.current = auctions;
+      }
+      return;
+    }
+
+    if (auctions.length > 0 && auctionsRef.current.length > 0) {
+      auctions.forEach(newItem => {
+        const oldItem = auctionsRef.current.find(a => a.id === newItem.id);
+        if (oldItem) {
+          if (newItem.price > oldItem.price) {
+            addToast(`🔥 บิดล่าสุดขึ้นเป็น ${newItem.price} USD₮`, newItem.name);
+          }
+        } else {
+          // New item
+          addToast(`✨ ของใหม่เข้าตลาด!`, newItem.name);
+        }
+      });
+    }
+
+    auctionsRef.current = auctions;
   }, [auctions]);
 
   // Filter and sort auctions
@@ -74,6 +125,8 @@ export default function Home() {
       <Navbar
         search={search}
         onSearchChange={setSearch}
+        sort={sort}
+        onSortChange={setSort}
         lang={lang}
         setLang={setLang}
         connected={connected}
@@ -87,21 +140,42 @@ export default function Home() {
             categories={categories}
             selected={category}
             onSelect={setCategory}
+            counts={categoryCounts}
             lang={lang}
           />
-          <SortSelect value={sort} onChange={setSort} lang={lang} />
         </div>
 
-        {/* Loading State */}
+        {/* Loading State & Empty State */}
         {loading ? (
-          <div className="loading-state">
-            <div className="loading-spinner"></div>
-            <p>{t(lang, 'loading')}</p>
+          <div className="skeleton-grid">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="skeleton-card"></div>
+            ))}
+          </div>
+        ) : filteredItems.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-icon">📂</div>
+            <h3>{lang === 'th' ? 'ไม่พบรายการที่ต้องการ' : 'No items found'}</h3>
+            <p>{lang === 'th' ? 'ลองเลือกหมวดหมู่หรือคำค้นหาอื่นดูอีกครั้งครับ' : 'Try adjusting your filters or search terms.'}</p>
           </div>
         ) : (
           <AuctionGrid items={filteredItems} lang={lang} />
         )}
       </main>
+
+      {/* Toast Notification Container */}
+      <div className="toast-container">
+        {toasts.map(toast => (
+          <div key={toast.id} className="toast-card" onClick={() => setToasts(t => t.filter(x => x.id !== toast.id))}>
+            <div className="toast-icon">⚡</div>
+            <div className="toast-content">
+              <h4 className="toast-title">{toast.title}</h4>
+              <p className="toast-msg">{toast.message}</p>
+            </div>
+            <div className="toast-close">✕</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

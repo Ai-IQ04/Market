@@ -43,6 +43,23 @@ function parseThaiDate(dateStr) {
  */
 function parsePrice(priceStr) {
   if (!priceStr) return null;
+  
+  // 1. Prioritize number followed by USDT/USD₮/USD
+  const usdtMatch = priceStr.match(/([\d,]+\.?\d*)\s*(?:USDT|USD₮|USD)/i);
+  if (usdtMatch) {
+    return parseFloat(usdtMatch[1].replace(/,/g, ''));
+  }
+
+  // 2. Fallback to finding a valid price-like number (not a list marker like "1.")
+  const allMatches = [...priceStr.matchAll(/([\d,]+\.?\d*)/g)];
+  for (const match of allMatches) {
+    const valStr = match[1];
+    if (valStr.includes(',') || valStr.includes('.') || parseFloat(valStr.replace(/,/g, '')) > 9) {
+      return parseFloat(valStr.replace(/,/g, ''));
+    }
+  }
+
+  // 3. Absolute fallback
   const match = priceStr.match(/([\d,]+\.?\d*)/);
   if (match) {
     return parseFloat(match[1].replace(/,/g, ''));
@@ -177,6 +194,12 @@ function extractDiscordTimestamp(text) {
  */
 function extractBuyNowPrice(embed) {
   const desc = embed.description || '';
+  
+  // Try to find "instant purchase price : ... 100 USDT"
+  const usdtMatch = desc.match(/instant\s*purchase\s*price.*?([\d,]+\.?\d*)\s*(?:USDT|USD₮|USD)/is);
+  if (usdtMatch) return parseFloat(usdtMatch[1].replace(/,/g, ''));
+
+  // Fallback
   const match = desc.match(/instant\s*purchase\s*price\s*:\s*([\d,]+\.?\d*)/i);
   if (match) return parseFloat(match[1].replace(/,/g, ''));
   return null;

@@ -14,6 +14,7 @@ const translations = {
     
     // Auction Card
     price: 'ราคา',
+    prize: 'ของรางวัล',
     currentBid: 'เสนอราคาปัจจุบัน',
     startingPrice: 'ราคาเริ่มต้น',
     buyNow: 'ซื้อเลย',
@@ -65,6 +66,7 @@ const translations = {
     
     // Auction Card
     price: 'Price',
+    prize: 'Prize',
     currentBid: 'Current Bid',
     startingPrice: 'Starting Price',
     buyNow: 'Buy Now',
