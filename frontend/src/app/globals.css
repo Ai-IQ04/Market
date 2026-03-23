@@ -92,13 +92,25 @@ body {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 html {
@@ -144,9 +156,9 @@ html {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
 }
@@ -154,8 +166,10 @@ html {
 .logo-icon-box::before {
   content: '';
   position: absolute;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
   background: radial-gradient(circle at center, rgba(168, 85, 247, 0.2), transparent 50%);
   animation: slowSpin 10s linear infinite;
   z-index: 0;
@@ -163,7 +177,9 @@ html {
 }
 
 @keyframes slowSpin {
-  100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .logo-svg {
@@ -222,8 +238,17 @@ html {
 }
 
 @keyframes pulseDot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px currentColor; }
-  50% { opacity: 0.4; box-shadow: 0 0 2px currentColor; }
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  50% {
+    opacity: 0.4;
+    box-shadow: 0 0 2px currentColor;
+  }
 }
 
 .navbar-right {
@@ -406,9 +431,11 @@ html {
     flex-direction: column;
     align-items: stretch;
   }
+
   .sort-select-wrapper {
     align-self: flex-start;
   }
+
   .category-filter {
     border-radius: 16px;
   }
@@ -457,6 +484,7 @@ html {
   background: linear-gradient(to left, rgba(15, 15, 20, 0.95) 30%, transparent);
   padding-left: 8px;
 }
+
 .category-filter {
   display: flex;
   gap: 6px;
@@ -471,7 +499,7 @@ html {
   border: 1px solid var(--border);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
   min-width: 0;
   flex: 1;
   position: relative;
@@ -543,7 +571,7 @@ html {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   transition: all 0.3s var(--ease-spring);
-  box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .sort-select:hover,
@@ -648,7 +676,7 @@ html {
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .badge-open {
@@ -673,8 +701,16 @@ html {
 }
 
 @keyframes pulse-badge {
-  0%, 100% { box-shadow: 0 0 12px rgba(249, 115, 22, 0.2); }
-  50% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.5); border-color: rgba(251, 146, 60, 0.6); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(249, 115, 22, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
+    border-color: rgba(251, 146, 60, 0.6);
+  }
 }
 
 .type-badge {
@@ -762,7 +798,7 @@ html {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: var(--radius-md);
-  box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .price-row {
@@ -892,7 +928,7 @@ html {
 .discord-icon {
   width: 18px;
   height: 18px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 /* ===== Countdown Progress Bar ===== */
@@ -963,6 +999,87 @@ html {
   }
 }
 
+/* Mobile-specific improvements for 640px and below */
+@media (max-width: 640px) {
+  .navbar-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .navbar-brand {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .navbar-center {
+    order: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .navbar-right {
+    order: 3;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .navbar-item-count {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .search-bar {
+    order: 1;
+    max-width: 100%;
+  }
+
+  .sort-select-wrapper {
+    order: 2;
+    align-self: stretch;
+  }
+
+  .sort-select {
+    width: 100%;
+  }
+
+  /* Improved auction grid for medium mobile screens */
+  .auction-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+
+  .skeleton-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+
+  /* Improved category filter for mobile touch */
+  .category-filter {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .category-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .scroll-fade {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+}
+
 @media (max-width: 480px) {
   .navbar-title {
     font-size: 15px;
@@ -970,6 +1087,218 @@ html {
 
   .auction-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .skeleton-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Improve touch targets for mobile */
+  .navbar-item-count,
+  .lang-toggle {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Extra small mobile screens (375px and below) */
+@media (max-width: 375px) {
+  .auction-grid {
+    gap: 16px;
+  }
+
+  .auction-card {
+    border-radius: var(--radius-lg);
+  }
+
+  .card-image-placeholder {
+    height: 160px;
+  }
+}
+
+/* Improved font sizes for mobile readability */
+@media (max-width: 768px) {
+  .card-name {
+    font-size: 16px;
+    line-height: 1.4;
+    margin: 8px 0 4px 0;
+  }
+
+  .price-value {
+    font-size: 18px;
+  }
+
+  .price-label {
+    font-size: 13px;
+  }
+
+  .card-meta {
+    font-size: 12px;
+  }
+
+  .countdown-label {
+    font-size: 12px;
+  }
+
+  .empty-state h3 {
+    font-size: 20px;
+  }
+
+  .empty-state p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-name {
+    font-size: 15px;
+  }
+
+  .price-value {
+    font-size: 16px;
+  }
+
+  .status-badge,
+  .type-badge {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  .empty-state h3 {
+    font-size: 18px;
+  }
+
+  .empty-state p {
+    font-size: 13px;
+  }
+}
+
+/* Toast notifications mobile improvements */
+@media (max-width: 640px) {
+  .toast-container {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    align-items: center;
+  }
+
+  .toast-card {
+    width: 100%;
+    max-width: 320px;
+    padding: 14px;
+  }
+
+  .toast-title {
+    font-size: 13px;
+  }
+
+  .toast-msg {
+    font-size: 11px;
+  }
+
+  .toast-icon {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 375px) {
+  .toast-card {
+    padding: 12px;
+  }
+
+  .toast-container {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+  }
+}
+
+/* ===== Touch-friendly Interactions ===== */
+/* Improve touch targets for mobile */
+@media (max-width: 768px) {
+
+  /* Minimum touch target size (44px recommended by Apple) */
+  .category-btn,
+  .lang-toggle,
+  .navbar-item-count,
+  .sort-select,
+  .search-input,
+  .custom-sort-btn {
+    min-height: 44px;
+  }
+
+  /* Improve button active states for touch feedback */
+  .category-btn:active,
+  .lang-toggle:active,
+  .navbar-item-count:active,
+  .custom-sort-btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+
+  /* Improve card touch interactions */
+  .auction-card {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .auction-card:active {
+    transform: scale(0.99);
+    transition: transform 0.1s ease;
+  }
+
+  /* Improve scroll behavior for mobile */
+  .category-filter {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Remove hover effects on mobile (replace with active) */
+  .auction-card:hover {
+    transform: none;
+  }
+
+  .auction-card:active {
+    background: var(--bg-card-hover);
+  }
+}
+
+/* Disable text selection on interactive elements for better touch experience */
+@media (max-width: 768px) {
+
+  .category-btn,
+  .lang-toggle,
+  .navbar-item-count,
+  .sort-select,
+  .custom-sort-btn,
+  .auction-card {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+}
+
+/* Improve form elements for mobile */
+@media (max-width: 768px) {
+
+  .search-input,
+  .sort-select {
+    font-size: 16px;
+    /* Prevents iOS zoom on focus */
+  }
+
+  input,
+  select,
+  button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
   }
 }
 
@@ -1018,13 +1347,18 @@ html {
 .skeleton-card::after {
   content: '';
   position: absolute;
-  top: 0; left: -100%; right: 0; bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+  top: 0;
+  left: -100%;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
   animation: shimmer 1.5s infinite;
 }
 
 @keyframes shimmer {
-  100% { left: 100%; }
+  100% {
+    left: 100%;
+  }
 }
 
 /* ===== Empty State ===== */
@@ -1048,7 +1382,7 @@ html {
 .empty-icon {
   font-size: 64px;
   margin-bottom: 24px;
-  filter: drop-shadow(0 0 24px rgba(255,255,255,0.1));
+  filter: drop-shadow(0 0 24px rgba(255, 255, 255, 0.1));
 }
 
 .empty-state h3 {
@@ -1078,14 +1412,14 @@ html {
 }
 
 .search-shortcut .kbd {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 4px;
   padding: 2px 6px;
   font-size: 10px;
   color: var(--text-muted);
   font-weight: 600;
-  box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* ===== Custom Sort Select (Glassmorphism) ===== */
@@ -1188,7 +1522,7 @@ html {
 .category-btn.active .cat-count {
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* ===== Toast Notifications ===== */
@@ -1227,8 +1561,15 @@ html {
 }
 
 @keyframes slideRight {
-  from { opacity: 0; transform: translateX(50px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .toast-icon {
