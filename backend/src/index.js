@@ -19,7 +19,7 @@ const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 // Express app
 const app = express();
 app.use(cors({
-  origin: [FRONTEND_URL, 'http://localhost:3000', 'http://localhost:3001'],
+  origin: '*',
   methods: ['GET'],
 }));
 app.use(express.json());
@@ -38,7 +38,7 @@ const server = http.createServer(app);
 // Socket.io
 const io = new Server(server, {
   cors: {
-    origin: [FRONTEND_URL, 'http://localhost:3000'],
+    origin: '*',
     methods: ['GET', 'POST'],
   },
 });
